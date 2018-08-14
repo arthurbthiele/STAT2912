@@ -1,0 +1,71 @@
+---
+title: "Tutorial Week 2"
+author: "Arthur Thiele"
+date: "August 7, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Computer Exercises, Week 2
+
+1. a)
+
+```{r}
+pnorm(1.25)
+pnorm(1.23, mean = 1) - pnorm(0.5, mean = 1)
+pt(2.353, df = 3)
+pt(1.476, df = 5)- pt(-1.476, df = 5)
+```
+
+b)
+```{r}
+qt(0.05, df = 8)
+qt(0.25, df = 7)
+qnorm(0.05)
+abs(qnorm(0.025))
+```
+
+
+2. a)
+
+```{r}
+data <- read.csv("amp.csv")
+summary(data)
+data
+```
+b)
+Since these tests are using different methods but on the same tablet (discussed with tutor Connor Smith), the null hypothesis is that there isn't a substantive difference between the measurement. 
+If data[1] = X, data[2] = Y,
+$$X_i - Y_i = d_i$$
+
+Null Hypothesis $H_0$: $\mu_d = 0$
+Alternative Hypothesis $H_1$: $\mu_d \neq 0$
+
+```{r}
+method.A = data[,1]
+method.B = data[,2]
+ds = method.A - method.B
+ds
+mean(ds)
+sd(ds)
+```
+
+Since there are 15 observed values, our observed test statistic is 
+```{r}
+T = abs(mean(ds))/(sd(ds)/sqrt(15))
+T
+```
+This distribution then has 9 degrees of freedom, and so our p-value is:
+```{r}
+p = 2*(1 - pt(T, df = 14))
+p
+```
+This is evidence that there is no significant difference between the pill-testing methods, since $p = 0.71 > 0.05$
+
+```{r}
+#toto: stemleaf, rest of tutorial
+
+```

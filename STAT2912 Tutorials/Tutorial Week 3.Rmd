@@ -1,0 +1,61 @@
+---
+title: "Tutorial Week 3"
+author: "SID 313010374"
+date: "August 14, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Computer Exercises
+
+
+```{r}
+su <- survival
+boxplot(su, horizontal = TRUE)
+qqnorm(su)
+```
+From this boxplot we can see that the survival rates have a substantial right-hand tail, i.e are skewed to the right.
+From the qqplot we can see that this distribution is likely not normal, as in a normal qqplot the line of quantiles would be straight. 
+
+```{r}
+mean(su)
+var(su)
+```
+This is a one-sided test of mean with $\mu = 160$.
+The test statistic is as follows:
+```{r}
+t.obs = (mean(su) - 160)/(sqrt(var(su)/length(su)))
+t.obs
+```
+Finding the p-value is then as follows:
+```{r}
+pt(t.obs, length(su) - 1)
+```
+This p-value is not heaps strong evidence that the mean is less than 160. 
+
+I already used a t-test.
+The p-values would be basically the same though, since n > 30 and so the t-distribution with 71 degrees of freedom is almost exactly normal.
+
+###Critical Values
+
+```{r}
+crit.tdist = (qt(0.05, 71))*sqrt(var(su))/sqrt(length(su)) + 160
+crit.normdist = qnorm(0.05)*sqrt(var(su))/sqrt(length(su)) + 160
+crit.tdist
+crit.normdist
+```
+The critical values are almost indistinguishable, and so we don't really care whether we use the t-distribtion or the normal distribution. By either of these critical values, the observed sample mean is not significant evidence.
+```{r}
+su1 <- su
+su1[4] = 2000
+mean(su1)
+```
+This new data point (which seems to be a very old mouse) skews the sample average a lot. It isn't significant in this instance.
+
+
+
+
+
